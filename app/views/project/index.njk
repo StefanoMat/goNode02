@@ -1,0 +1,65 @@
+{% extends 'layouts/default.njk' %}
+{% block body %}
+
+{% include 'partials/header.njk' %}
+    <section id="main">
+      <div class="container">
+        <header>
+        {% for project in projects %}
+          <h2> {{ project.title }} </h2>
+        {% endfor %}
+
+          <div class="addon">
+          <form action="/app/project/{{ projectId }}?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">Excluir projeto</button>
+          </form>
+          </div>
+        </header>
+
+        <section id="content">
+          <nav>
+            <div class="sessions">
+            {% for project in projects %}
+              {% for section in project.Sections %}
+              <a href="/app/project/{{ project.id }}/sections/{{ section.id }}" class="{% if section.id == activeId %}active{% endif %}">{{ section.title }}</a>
+              {% endfor %}
+            {% endfor %}
+
+            </div>
+          {% for project in projects %}
+            <form action="/app/project/{{ project.id }}/create" method="post">
+          {% endfor %}
+              <input type="text" required="required" name="title" placeholder="Nova seção">
+              <button type="submit"   class="btn"><img src="/img/plus.svg"></button>
+            </form>
+
+          </nav>
+          {% include 'partials/modal.njk' %}
+          <article>
+          {% if sections.title.length > 0 %}
+            <div class="project-header">
+              <h1>{{sections.title}}</h1>
+
+              <form action="/app/project/{{ projectId }}/sections/{{ activeId }}?_method=DELETE" method="POST">
+                <button type="submit" >Remover seção</button>
+              </form>
+            </div>
+          {% endif %}
+            {% if sections.content == null and sections.title.length > 0 %}
+              {% for project in projects %}
+                {% for section in project.Sections %}
+                <form action="" data-modal-open="#new-section" method="post">
+                {% endfor %}
+              {% endfor %}
+              <button type="submit" class="btn"><img src="/img/plus.svg"></button>
+            {% endif %}
+            </form>
+            <p>{{ sections.content }}</p>
+          </article>
+        </section>
+      </div>
+    </section>
+  </div>
+
+
+{% endblock %}

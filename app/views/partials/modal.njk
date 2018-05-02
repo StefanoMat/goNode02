@@ -1,0 +1,17 @@
+<div class="modal" id="new-section">
+
+  {% for project in projects %}
+    {% for section in project.Sections %}
+      <form class="modal-content" method="POST" action="/app/project/{{ project.id }}/sections/{{ section.id }}?_method=PUT">
+    {% endfor %}
+  {% endfor%}
+
+      <div class="content-container">
+        <textarea name="content" class="mde" placeholder="Conteúdo da seção"></textarea>
+       </div>
+
+       <button type="submit">SALVAR SEÇÃO</button>
+        <a href="#" data-modal-close="#new-section">CANCELAR</a>
+      </form>
+
+    </div>
